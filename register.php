@@ -1,3 +1,13 @@
+<?php include "includes/init.php" ?>
+   <?php
+    if($_SERVER['REQUEST_METHOD']=='POST'){
+        foreach($_POST as $key=>$value){
+            echo "Key:{$key} - Value: {$value}";
+        }
+    } else {
+        echo "NO POST DATA INCLUDED";
+    }
+?>
 <!DOCTYPE html>
 <html lang="en">
     <?php include "includes/header.php" ?>
