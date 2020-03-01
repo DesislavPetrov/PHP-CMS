@@ -1,8 +1,15 @@
 <?php include "includes/init.php" ?>
-   <?php
+<?php
     if($_SERVER['REQUEST_METHOD']=='POST'){
-        foreach($_POST as $key=>$value){
-            echo "Key:{$key} - Value: {$value}";
+        try {
+            $sql = "INSERT INTO users (firstname, lastname, username, email, password, comments, validationcode, active, joined, last_login) VALUES (:firstname, :lastname, :username, :email, :password, :comments, 'test', 0, current_date, current_date)";
+            
+            $stmnt = $pdo->prepare($sql);
+            $user_data = [':firstname'=>$_POST['firstname'], ':lastname'=>$_POST['lastname'],':username'=>$_POST['username'], ':email'=>$_POST['email'], ':password'=>$_POST['password'], ':comments'=>$_POST['comments']];
+            $stmnt->execute($user_data);
+            echo "USER ENTERED INTO DATABASE!!!";
+        } catch (PDOException $e){
+            echo "Error: ".$e->getMessage();
         }
     } else {
         echo "NO POST DATA INCLUDED";
@@ -14,9 +21,12 @@
     <body>
         <?php include "includes/nav.php" ?>
 
+
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
+
+
 
 
                 </div>
@@ -47,7 +57,7 @@
                                             <input type="password" name="confirm_password" id="confirm-password" tabindex="6" class="form-control" placeholder="Confirm Password" required>
                                         </div>
                                         <div class="form-group">
-                                            <textarea name="comments" id="comments" tabindex="7" class="form-control" placeholder="Comments" required></textarea>
+                                            <textarea name="comments" id="comments" tabindex="7" class="form-control" placeholder="Comments"></textarea>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
