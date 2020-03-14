@@ -25,6 +25,28 @@
         if($email != $email_conf){
             $error[] = "Email addresses do not match";
         }
+        
+        try{
+            $stmnt = $pdo->prepare("SELECT username FROM users WHERE username = :username");
+            $user_data = [':username'=>$uname];
+            $stmnt->execute($user_data);
+            if($stmnt->rowCount()>0){
+                $error[]="Username '{$uname}' already exists";
+            }
+        } catch (PDOException $e){
+            echo "Error: {$e->getMessage()}";
+        }
+        
+        try{
+            $stmnt = $pdo->prepare("SELECT email FROM users WHERE email = :email");
+            $user_data = [':email'=>$email];
+            $stmnt->execute($user_data);
+            if($stmnt->rowCount()>0){
+                $error[]="Email '{$email}' already exists";
+            }
+        } catch (PDOException $e){
+            echo "Error: {$e->getMessage()}";
+        }
 
         if(!isset($error)){
             try {
