@@ -1,18 +1,46 @@
 <?php include "includes/init.php" ?>
 <?php
     if($_SERVER['REQUEST_METHOD']=='POST'){
-        try {
-            $sql = "INSERT INTO users (firstname, lastname, username, email, password, comments, validationcode, active, joined, last_login) VALUES (:firstname, :lastname, :username, :email, :password, :comments, 'test', 0, current_date, current_date)";
-            
-            $stmnt = $pdo->prepare($sql);
-            $user_data = [':firstname'=>$_POST['firstname'], ':lastname'=>$_POST['lastname'],':username'=>$_POST['username'], ':email'=>$_POST['email'], ':password'=>$_POST['password'], ':comments'=>$_POST['comments']];
-            $stmnt->execute($user_data);
-            echo "USER ENTERED INTO DATABASE!!!";
-        } catch (PDOException $e){
-            echo "Error: ".$e->getMessage();
+        $fname = $_POST['firstname'];
+        $lname = $_POST['lastname'];
+        $uname = $_POST['username'];
+        $email = $_POST['email'];
+        $email_conf = $_POST['email_confirm'];
+        $pword = $_POST['password'];
+        $pword_conf = $_POST['password_confirm'];
+        $comments = $_POST['comments'];
+
+        if(strlen($lname)<3){
+            $error[] = "Last name must be at least 3 characters long";
         }
+        if(strlen($uname)<6){
+            $error[] = "User name must be at least 6 characters long";
+        }
+        if(strlen($pword)<6){
+            $error[] = "Password must be at least 6 characters long";
+        }
+        if($pword != $pword_conf){
+            $error[] = "Passwords do not match";
+        }
+        if($email != $email_conf){
+            $error[] = "Email addresses do not match";
+        }
+
+        if(!isset($error)){
+            try {
+                $sql = "INSERT INTO users (firstname, lastname, username, email, password, comments, validationcode, active, joined, last_login) VALUES (:firstname, :lastname, :username, :email, :password, :comments, 'test', 0, current_date, current_date)";
+
+                $stmnt = $pdo->prepare($sql);
+                $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>$pword, ':comments'=>$comments];
+                $stmnt->execute($user_data);
+                echo "USER ENTERED INTO DATABASE!!!";
+            } catch (PDOException $e){
+                echo "Error: ".$e->getMessage();
+            }
+        }
+
+
     } else {
-        echo "NO POST DATA INCLUDED";
     }
 ?>
 <!DOCTYPE html>
@@ -25,7 +53,13 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
-
+                    <?php
+    if(isset($error)){
+        foreach($error as $msg){
+            echo "<p class='bg-danger text-center'>{$msg}</p>";
+        }
+    }
+                    ?>
 
 
 
@@ -51,10 +85,13 @@
                                             <input type="email" name="email" id="register_email" tabindex="4" class="form-control" placeholder="Email Address" value="" required >
                                         </div>
                                         <div class="form-group">
+                                            <input type="email" name="email_confirm" id="email-confirm" tabindex="4" class="form-control" placeholder="Confirm Email Address" value="" required >
+                                        </div>
+                                        <div class="form-group">
                                             <input type="password" name="password" id="password" tabindex="5" class="form-control" placeholder="Password" required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="confirm_password" id="confirm-password" tabindex="6" class="form-control" placeholder="Confirm Password" required>
+                                            <input type="password" name="password_confirm" id="password-confirm" tabindex="6" class="form-control" placeholder="Confirm Password" required>
                                         </div>
                                         <div class="form-group">
                                             <textarea name="comments" id="comments" tabindex="7" class="form-control" placeholder="Comments"></textarea>

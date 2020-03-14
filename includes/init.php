@@ -7,7 +7,6 @@
         PDO::ATTR_EMULATE_PREPARES   => false
     ];
     $pdo = new PDO($dsn, 'postgres', 'express', $opt);
-    echo "Connected To Database";
 //  *************** For MySQL
 //    $dsn = "mysql:host=localhost;dbname=login_course;port=3306;charset=utf8";
 //    $opt = [
