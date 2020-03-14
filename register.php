@@ -41,6 +41,14 @@
 
 
     } else {
+        $fname = "";
+        $lname = "";
+        $uname = "";
+        $email = "";
+        $email_conf = "";
+        $pword = "";
+        $pword_conf = "";
+        $comments = "";
     }
 ?>
 <!DOCTYPE html>
@@ -73,28 +81,28 @@
                                 <div class="col-lg-12">
                                     <form id="register-form" method="post" role="form" >
                                         <div class="form-group">
-                                            <input type="text" name="firstname" id="firstname" tabindex="1" class="form-control" placeholder="First Name" value="" required >
+                                            <input type="text" name="firstname" id="firstname" tabindex="1" class="form-control" placeholder="First Name" value="<?php echo $fname ?>" required >
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="lastname" id="lastname" tabindex="2" class="form-control" placeholder="Last Name" value="" required >
+                                            <input type="text" name="lastname" id="lastname" tabindex="2" class="form-control" placeholder="Last Name" value="<?php echo $lname ?>" required >
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" name="username" id="username" tabindex="3" class="form-control" placeholder="Username" value="" required >
+                                            <input type="text" name="username" id="username" tabindex="3" class="form-control" placeholder="Username" value="<?php echo $uname ?>" required >
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" name="email" id="register_email" tabindex="4" class="form-control" placeholder="Email Address" value="" required >
+                                            <input type="email" name="email" id="register_email" tabindex="4" class="form-control" placeholder="Email Address" value="<?php echo $email ?>" required >
                                         </div>
                                         <div class="form-group">
-                                            <input type="email" name="email_confirm" id="email-confirm" tabindex="4" class="form-control" placeholder="Confirm Email Address" value="" required >
+                                            <input type="email" name="email_confirm" id="email-confirm" tabindex="4" class="form-control" placeholder="Confirm Email Address" value="<?php echo $email_conf ?>" required >
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password" id="password" tabindex="5" class="form-control" placeholder="Password" required>
+                                            <input type="password" name="password" id="password" tabindex="5" class="form-control" placeholder="Password" value="<?php echo $pword ?>" required>
                                         </div>
                                         <div class="form-group">
-                                            <input type="password" name="password_confirm" id="password-confirm" tabindex="6" class="form-control" placeholder="Confirm Password" required>
+                                            <input type="password" name="password_confirm" id="password-confirm" tabindex="6" class="form-control" placeholder="Confirm Password" value="<?php echo $pword_conf ?>" required>
                                         </div>
                                         <div class="form-group">
-                                            <textarea name="comments" id="comments" tabindex="7" class="form-control" placeholder="Comments"></textarea>
+                                            <textarea name="comments" id="comments" tabindex="7" class="form-control" placeholder="Comments"><?php echo $comments ?></textarea>
                                         </div>
                                         <div class="form-group">
                                             <div class="row">
