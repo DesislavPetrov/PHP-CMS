@@ -55,7 +55,8 @@
                 $stmnt = $pdo->prepare($sql);
                 $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>$pword, ':comments'=>$comments];
                 $stmnt->execute($user_data);
-                echo "USER ENTERED INTO DATABASE!!!";
+                $_SESSION['message'] = "User succesfully registered";
+                header("Location: index.php");
             } catch (PDOException $e){
                 echo "Error: ".$e->getMessage();
             }

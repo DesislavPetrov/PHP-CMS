@@ -1,4 +1,6 @@
 <?php
+ob_start(); // output buffering
+session_start();
 //  *************** For PostgreSQL
     $dsn = "pgsql:host=localhost;dbname=login_course;port=5432";
     $opt = [
