@@ -26,26 +26,12 @@
             $error[] = "Email addresses do not match";
         }
         
-        try{
-            $stmnt = $pdo->prepare("SELECT username FROM users WHERE username = :username");
-            $user_data = [':username'=>$uname];
-            $stmnt->execute($user_data);
-            if($stmnt->rowCount()>0){
-                $error[]="Username '{$uname}' already exists";
-            }
-        } catch (PDOException $e){
-            echo "Error: {$e->getMessage()}";
+        if(count_field_val($pdo, "users", "username", $uname) != 0){
+            $error[] = "Username '{$uname}' already exists";
         }
         
-        try{
-            $stmnt = $pdo->prepare("SELECT email FROM users WHERE email = :email");
-            $user_data = [':email'=>$email];
-            $stmnt->execute($user_data);
-            if($stmnt->rowCount()>0){
-                $error[]="Email '{$email}' already exists";
-            }
-        } catch (PDOException $e){
-            echo "Error: {$e->getMessage()}";
+        if(count_field_val($pdo, "users", "email", $email) != 0){
+            $error[] = "Email '{$email}' already exists";
         }
 
         if(!isset($error)){
@@ -56,7 +42,8 @@
                 $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>$pword, ':comments'=>$comments];
                 $stmnt->execute($user_data);
                 $_SESSION['message'] = "User succesfully registered";
-                header("Location: index.php");
+                // we replace this code with the code on the below row "header("Location: index.php");
+                redirect("index.php");
             } catch (PDOException $e){
                 echo "Error: ".$e->getMessage();
             }
