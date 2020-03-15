@@ -36,10 +36,10 @@
 
         if(!isset($error)){
             try {
-                $sql = "INSERT INTO users (firstname, lastname, username, email, password, comments, validationcode, active, joined, last_login) VALUES (:firstname, :lastname, :username, :email, :password, :comments, 'test', 0, current_date, current_date)";
+                $sql = "INSERT INTO users (firstname, lastname, username, email, password, comments, validationcode, active, joined, last_login) VALUES (:firstname, :lastname, :username, :email, :password, :comments, :vcode, 0, current_date, current_date)";
 
                 $stmnt = $pdo->prepare($sql);
-                $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>$pword, ':comments'=>$comments];
+                $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>password_hash($pword, PASSWORD_BCRYPT), ':comments'=>$comments, ':vcode'=>generate_token()];
                 $stmnt->execute($user_data);
                 $_SESSION['message'] = "User succesfully registered";
                 // we replace this code with the code on the below row "header("Location: index.php");
