@@ -35,15 +35,16 @@
         }
 
         if(!isset($error)){
+            $vcode = generate_token();
             try {
                 $sql = "INSERT INTO users (firstname, lastname, username, email, password, comments, validationcode, active, joined, last_login) VALUES (:firstname, :lastname, :username, :email, :password, :comments, :vcode, 0, current_date, current_date)";
 
                 $stmnt = $pdo->prepare($sql);
-                $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>password_hash($pword, PASSWORD_BCRYPT), ':comments'=>$comments, ':vcode'=>generate_token()];
+                $user_data = [':firstname'=>$fname, ':lastname'=>$lname,':username'=>$uname, ':email'=>$email, ':password'=>password_hash($pword, PASSWORD_BCRYPT), ':comments'=>$comments, ':vcode'=>$vcode];
                 $stmnt->execute($user_data);
-                $_SESSION['message'] = "User succesfully registered";
-                // we replace this code with the code on the below row "header("Location: index.php");
-                redirect("index.php");
+                
+                $body = "<p>Please click on the link below to activate your account</p><p><a href='activate.php?user={$uname}&code={$vcode}'>Activate Account</a></p>";
+                send_mail($email, "Activate User", $body, "batence1986@abv.bg", $reply_email);
             } catch (PDOException $e){
                 echo "Error: ".$e->getMessage();
             }

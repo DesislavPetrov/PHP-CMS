@@ -18,5 +18,7 @@ session_start();
 //    ];
 //    $pdo = new PDO($dsn, $user, $pass, $opt);
 
+$from_email = "batence1986@abv.bg";
+$reply_email = "batence1986@abv.bg";
 include "php_functions.php";
 ?>
