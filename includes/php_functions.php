@@ -27,4 +27,15 @@ function send_mail($to, $subject, $body, $from, $reply){
     }
 }
 
+function get_validationcode($user, $pdo){
+     try {
+        $stmnt=$pdo->prepare("SELECT validationcode FROM users WHERE username = :username");
+        $stmnt->execute([':username'=>$user]);
+        $row = $stmnt->fetch();
+        return $row['validationcode'];
+    } catch(PDOException $e) {
+        return $e->getMessage();
+    }
+}
+
 ?>
