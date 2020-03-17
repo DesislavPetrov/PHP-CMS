@@ -7,6 +7,24 @@ function generate_token() {
     return md5(microtime().mt_rand());
 }
 
+function set_msg($msg, $level='danger'){
+    if(($level!='primary') && ($level!='success') && ($level!='info') && ($level!='warning')){
+        $level='danger';
+    }
+    if(empty($msg)){
+        unset($_SESSION['message']);
+    } else {
+        $_SESSION['message']="<h4 class='bg-{$level} text-center'>{$msg}</h4>";
+    }
+}
+            
+function show_msg(){
+    if (isset($_SESSION['message'])){
+        echo $_SESSION['message'];
+        unset($_SESSION['message']);
+    }
+}
+
 function count_field_val($pdo, $tbl, $fld, $val) {
     try {
         $sql="SELECT {$fld} FROM {$tbl} WHERE {$fld}=:value";

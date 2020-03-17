@@ -72,10 +72,11 @@
         <div class="container">
             <div class="row">
                 <div class="col-lg-6 col-lg-offset-3">
-                    <?php
+                   <?php
+                show_msg();
     if(isset($error)){
         foreach($error as $msg){
-            echo "<p class='bg-danger text-center'>{$msg}</p>";
+            echo "<h4 class='bg-danger text-center'>{$msg}</h4>";
         }
     }
                     ?>
